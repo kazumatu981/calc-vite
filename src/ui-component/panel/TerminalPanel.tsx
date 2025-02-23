@@ -3,7 +3,7 @@ import { TerminalService } from 'primereact/terminalservice';
 import { useEffect, JSX, useContext, useState } from 'react';
 import { ExpressionContext } from '../ExpressionContext';
 
-import { resolveAsync } from '../../lib/resolver';
+// import { resolveAsync } from '../../lib/resolver';
 import './TerminalPanel.scss';
 
 const welcomeMessage = '対話式計算機: 四則演算の数式を入力して"Enter"キーを押してください。';
@@ -20,21 +20,25 @@ export function TerminalPanel(): JSX.Element {
     function onCommand(expression: string) {
         setIsProcessing(true);
         context?.setExpression(expression);
-        resolveAsync(expression)
-            .then((result) => {
-                TerminalService.emit('response', result);
-            })
-            .catch((error) => {
-                TerminalService.emit('response', error.message);
-            })
-            .finally(() => {
-                setIsProcessing(false);
-            });
+        // resolveAsync(expression)
+        //     .then((result) => {
+        //         TerminalService.emit('response', result);
+        //     })
+        //     .catch((error) => {
+        //         TerminalService.emit('response', error.message);
+        //     })
+        //     .finally(() => {
+        //         setIsProcessing(false);
+        //     });
+        setTimeout(() => {
+            TerminalService.emit('response', expression);
+            setIsProcessing(false);
+        }, 1000);
     }
 
     return (
         <div className="m-4">
-            <Terminal welcomeMessage={welcomeMessage} prompt="計算式> "></Terminal>
+            <Terminal welcomeMessage={welcomeMessage} prompt={isProcessing? "計算中" : "計算式> "}></Terminal>
         </div>
     );
 }
