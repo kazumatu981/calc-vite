@@ -1,31 +1,40 @@
-import { JSX, useContext, useRef } from 'react';
-import { ExpressionContext } from '../ExpressionContext';
-import {PositionViewer} from '../components/PositionViewer';
+import { JSX, useContext } from 'react';
+import { ExpressionContext } from '../context/ExpressionContext';
+import { AnalyzedContext } from '../context/AnalyzedContext';
+import { PositionViewer } from '../components/PositionViewer';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
-import { Button } from 'primereact/button';
+
+import { TokenizeDetail } from './details/TokenizeDetail';
+import { ParseDetail } from './details/ParseDetail';
+import { ExecuteDetail } from './details/ExecuteDetail';
 
 export function MechanismPanel(): JSX.Element {
-    const context = useContext(ExpressionContext);
-    const stepperRef = useRef(null);
-    return (
-        <div>
-            <p>{context?.expression}を分析します。</p>
-
-            <PositionViewer expression={context?.expression || ''} />
-
-            <Stepper ref={stepperRef} orientation='vertical'>
-                <StepperPanel header='字句解析'>
-                    <p>Step 1 Content</p>
+    const expressionContext = useContext(ExpressionContext);
+    const analyzedContext = useContext(AnalyzedContext);
+    const detailContent = (
+        <>
+            <Stepper orientation="vertical">
+                <StepperPanel header="字句解析">
+                    <TokenizeDetail tokens={analyzedContext?.analyzed?.tokens || []} />
                 </StepperPanel>
-                <StepperPanel header='構文解析'>
-                    <p>Step 2 Content</p>
+                <StepperPanel header="構文解析">
+                    <ParseDetail parsedNode={analyzedContext?.analyzed?.nodes} />
                 </StepperPanel>
-                <StepperPanel header='意味解析'>
-                    <p>Step 3 Content</p>
+                <StepperPanel header="意味解析">
+                    <ExecuteDetail steps={analyzedContext?.analyzed?.resolveEventArgs || []} />
                 </StepperPanel>
             </Stepper>
-        </div>
+        </>
     );
-}
+    const analyzedDetailContent = (
+        <>
+            <p>{expressionContext?.expression}を分析します。</p>
 
+            <PositionViewer expression={expressionContext?.expression || ''} />
+
+            <div>{analyzedContext?.analyzed ? detailContent : <></>}</div>
+        </>
+    );
+    return <div>{expressionContext?.expression && analyzedDetailContent}</div>;
+}
