@@ -1,17 +1,19 @@
 $viewerHight: 1.5rem;
 .position-viewer {
     justify-items: center;
-}
 
-.position-viewer-table {
-    border-collapse: collapse;
-    .position-viewer-index {
+    .position-viewer_table {
+        border-collapse: collapse;
+    }
+    .position-viewer_index {
         padding: 0 0.5rem;
         border-left: 1px dotted var(--text-color-secondary);
     }
-    .position-viewer-char {
+    .position-viewer_char {
         padding: 0 1rem;
         text-align: center;
         border-left: 1px dotted var(--text-color-secondary);
+
+        font-size: 1.75rem;
     }
 }

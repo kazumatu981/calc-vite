@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
 import { Location } from './Location';
 import './PositionViewer.scss';
@@ -11,11 +9,11 @@ export function PositionViewer({ expression }: { expression: string }): JSX.Elem
 
     return (
         <div className="position-viewer">
-            <table className="position-viewer-table">
+            <table className="position-viewer_table">
                 <tr>
                     {expression.split('').map((_, index) => {
                         return (
-                            <td className="position-viewer-index" key={index}>
+                            <td className="position-viewer_index" key={index}>
                                 <Location position={index} />
                             </td>
                         );
@@ -24,8 +22,8 @@ export function PositionViewer({ expression }: { expression: string }): JSX.Elem
                 <tr>
                     {expression.split('').map((char, index) => {
                         return (
-                            <td className="position-viewer-char" key={index}>
-                                <big>{char}</big>
+                            <td className="position-viewer_char" key={index}>
+                                {char}
                             </td>
                         );
                     })}
