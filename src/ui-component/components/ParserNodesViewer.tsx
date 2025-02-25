@@ -1,9 +1,9 @@
-import { BinaryNode, ParenNode, type ParserNode, SingleNode } from '../../lib/parser/parser-node';
-import { OrganizationChart, OrganizationChartNodeData } from 'primereact/organizationchart';
-import './ParserNodesViewer.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
+import { OrganizationChart, OrganizationChartNodeData } from 'primereact/organizationchart';
+
+import './ParserNodesViewer.scss';
+import { BinaryNode, ParenNode, type ParserNode, SingleNode } from '../../lib/parser/parser-node';
+import { TokensViewer } from './TokensViewer';
 
 interface ParsedChardNodeData extends OrganizationChartNodeData {
     id: string;
@@ -46,27 +46,12 @@ function parserNodeToTreeNode(parserNode: ParserNode): ParsedChardNodeData {
 }
 
 function nodeTemplate(node: OrganizationChartNodeData): JSX.Element {
-    const classNames = [
-        'flex',
-        'flex-row',
-        'gap-1',
-        'border-1',
-        'p-2',
-        'border-round-md',
-        'align-items-center',
-        'justify-content-center',
-        'shadow-7',
-    ];
     const data = (node as ParsedChardNodeData).data as ParserNode;
-    if (data.nodeType === 'binary') {
-        classNames.push('bg-teal-100');
-    }
-    if (data.nodeType === 'paren') {
-        classNames.push('bg-orange-100');
-    }
     return (
-        <div className={classNames.join(' ')}>
-            <div>
+        <div className="parser-node-item">
+            <TokensViewer tokens={data.tokens} withBorder={false} />
+            <div className="parser-node-item_expression">{data.toString()}</div>
+            {/* <div>
                 <div className="flex flex-row justify-content-center">
                     <div className="text-2xl">{node.label}</div>
                 </div>
@@ -77,7 +62,7 @@ function nodeTemplate(node: OrganizationChartNodeData): JSX.Element {
                     </div>
                     <div className="p-1">{data.toString()}</div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -18,3 +18,12 @@
         border-right: 2px dotted #aaa;
     }
 }
+.parser-node-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .parser-node-item_expression {
+        font-size: 0.8rem;
+        color: var(--surface-600);
+    }
+}
