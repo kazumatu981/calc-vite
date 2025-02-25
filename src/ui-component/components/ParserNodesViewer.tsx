@@ -51,18 +51,6 @@ function nodeTemplate(node: OrganizationChartNodeData): JSX.Element {
         <div className="parser-node-item">
             <TokensViewer tokens={data.tokens} withBorder={false} />
             <div className="parser-node-item_expression">{data.toString()}</div>
-            {/* <div>
-                <div className="flex flex-row justify-content-center">
-                    <div className="text-2xl">{node.label}</div>
-                </div>
-                <div className="flex flex-row text-xs">
-                    <div className="mr-2 bg-primary border-round p-1">
-                        <FontAwesomeIcon icon={faLocationDot} />
-                        {data.tokens[0].position}
-                    </div>
-                    <div className="p-1">{data.toString()}</div>
-                </div>
-            </div> */}
         </div>
     );
 }
