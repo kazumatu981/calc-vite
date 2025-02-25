@@ -1,43 +1,46 @@
+import { JSX } from 'react';
 import { Token } from '../../lib/tokenizer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { Location } from './Location';
 import './TokensViewer.scss';
 
-function TokenItem({ token }: { token: Token }) {
+function TokenViewer({ token, withBorder }: { token: Token; withBorder?: boolean }) {
     const classNames = ['token'];
-    if (token.isOperator) {
-        classNames.push('operator');
+    let tokenType = '不明';
+
+    switch (token.type) {
+        case 'number':
+            classNames.push('token__number');
+            tokenType = '数値';
+            break;
+        case 'leftParen':
+        case 'rightParen':
+            classNames.push('token__paren');
+            tokenType = '括弧';
+            break;
+        case 'operator':
+            classNames.push('token__operator');
+            tokenType = '演算子';
+            break;
     }
-    if (token.isParen) {
-        classNames.push('paren');
-    }
+
     return (
-        <div className="token-item">
-            <div>
-                <small>
-                    <FontAwesomeIcon icon={faLocationDot} size="xs" />
-                    {token.position}
-                </small>
-            </div>
+        <div className={withBorder ? 'token-item__with-border' : 'token-item'}>
+            <Location position={token.position} />
             <div className={classNames.join(' ')}>
-                <div>
-                    <big>{token.value}</big>
-                </div>
-                <div>
-                    <small>{token.type}</small>
-                </div>
+                <div className="token__value">{token.value}</div>
+                <div className="token__type">{tokenType}</div>
             </div>
         </div>
     );
 }
 
-export function TokensViewer({ tokens }: { tokens: Token[] }) {
+export function TokensViewer({ tokens, withBorder }: { tokens: Token[]; withBorder?: boolean }): JSX.Element {
     return tokens.length === 0 ? (
         <></>
     ) : (
         <div className="tokens">
             {tokens.map((token) => (
-                <TokenItem key={token.id} token={token} />
+                <TokenViewer key={token.id} token={token} withBorder={withBorder} />
             ))}
         </div>
     );

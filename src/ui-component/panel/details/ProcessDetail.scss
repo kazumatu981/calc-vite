@@ -1,0 +1,10 @@
+.process-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .process-detail__figure {
+        justify-content: center;
+        align-items: center;
+    }
+}

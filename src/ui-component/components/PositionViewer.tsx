@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
+import { Location } from './Location';
 import './PositionViewer.scss';
 
 export function PositionViewer({ expression }: { expression: string }): JSX.Element {
@@ -15,9 +16,7 @@ export function PositionViewer({ expression }: { expression: string }): JSX.Elem
                     {expression.split('').map((_, index) => {
                         return (
                             <td className="position-viewer-index" key={index}>
-                                <small>
-                                    <FontAwesomeIcon icon={faLocationDot} size="xs" /> {index}
-                                </small>
+                                <Location position={index} />
                             </td>
                         );
                     })}
@@ -26,7 +25,7 @@ export function PositionViewer({ expression }: { expression: string }): JSX.Elem
                     {expression.split('').map((char, index) => {
                         return (
                             <td className="position-viewer-char" key={index}>
-                                <big>{char === ' ' ? '&nbsp;' : char}</big>
+                                <big>{char}</big>
                             </td>
                         );
                     })}

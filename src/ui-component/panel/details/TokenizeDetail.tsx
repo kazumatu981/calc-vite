@@ -25,5 +25,5 @@ const description = (
 );
 
 export function TokenizeDetail(prop: TokenizeDetailProps): JSX.Element {
-    return <ProcessDetail figure={<TokensViewer tokens={prop.tokens} />} description={description} />;
+    return <ProcessDetail figure={<TokensViewer tokens={prop.tokens} withBorder={true} />} description={description} />;
 }

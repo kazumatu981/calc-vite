@@ -1,6 +1,6 @@
 import { BinaryNode, ParenNode, type ParserNode, SingleNode } from '../../lib/parser/parser-node';
 import { OrganizationChart, OrganizationChartNodeData } from 'primereact/organizationchart';
-import './ParserNodesViewer.css';
+import './ParserNodesViewer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
