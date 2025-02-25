@@ -1,0 +1,30 @@
+div.tokens {
+    display: flex;
+    flex-direction: row;
+    gap: 3;
+    overflow: auto;
+    div.token-item {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px dashed var(--text-color-secondary);
+        div.token {
+            padding: 0.5rem 1rem;
+            margin: 0em 0.5em;
+
+            align-items: center;
+
+            border-radius: var(--border-radius);
+
+            display: flex;
+            flex-direction: column;
+        }
+        div.operator {
+            color: var(--primary-color-text);
+            background-color: var(--primary-color);
+        }
+        div.paren {
+            color: var(--highlight-text-color);
+            background-color: var(--highlight-bg);
+        }
+    }
+}

@@ -1,32 +1,37 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
+import './PositionViewer.scss';
 
 export function PositionViewer({ expression }: { expression: string }): JSX.Element {
-    const header =
-        expression.length === 0 ? (
-            <></>
-        ) : (
-            <div className="flex flex-column border-1">
-                <div className="flex align-items-center justify-content-center border-bottom-1 p-1">{'character'}</div>
-                <div className="flex align-items-center justify-content-center border-bottom-1 p-1 bg-gray-300">
-                    <FontAwesomeIcon icon={faLocationDot} size="xs" />
-                    {'position'}
-                </div>
-            </div>
-        );
-    const charArray = expression.split('').map((charItem, index) => {
-        return (
-            <div className="flex flex-column border-1">
-                <div className="flex align-items-center justify-content-center border-bottom-1 p-1 w-2rem">
-                    {charItem === ' ' ? <>&nbsp;</> : charItem}
-                </div>
-                <div className="flex align-items-center justify-content-center border-bottom-1 p-1 bg-gray-300">
-                    {index}
-                </div>
-            </div>
-        );
-    });
+    if (expression.length === 0) {
+        return <></>;
+    }
 
-    return <div className="flex flex-row">{[header, ...charArray]}</div>;
+    return (
+        <div className="position-viewer">
+            <table className="position-viewer-table">
+                <tr>
+                    {expression.split('').map((_, index) => {
+                        return (
+                            <td className="position-viewer-index" key={index}>
+                                <small>
+                                    <FontAwesomeIcon icon={faLocationDot} size="xs" /> {index}
+                                </small>
+                            </td>
+                        );
+                    })}
+                </tr>
+                <tr>
+                    {expression.split('').map((char, index) => {
+                        return (
+                            <td className="position-viewer-char" key={index}>
+                                <big>{char === ' ' ? '&nbsp;' : char}</big>
+                            </td>
+                        );
+                    })}
+                </tr>
+            </table>
+        </div>
+    );
 }

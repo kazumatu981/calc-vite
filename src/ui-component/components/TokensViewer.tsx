@@ -1,38 +1,31 @@
 import { Token } from '../../lib/tokenizer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import './TokensViewer.scss';
 
 function TokenItem({ token }: { token: Token }) {
-    const classNames = [
-        'flex',
-        'flex-column',
-        'gap-1',
-        'border-1',
-        'p-2',
-        'border-round-md',
-        'align-items-center',
-        'justify-content-center',
-        'shadow-7',
-    ];
+    const classNames = ['token'];
     if (token.isOperator) {
-        classNames.push('bg-teal-100');
+        classNames.push('operator');
     }
     if (token.isParen) {
-        classNames.push('bg-orange-100');
+        classNames.push('paren');
     }
     return (
-        <div className={classNames.join(' ')}>
-            <div>
-                <big>{token.value}</big>
-            </div>
-            <div>
-                <small>{token.type}</small>
-            </div>
+        <div className="token-item">
             <div>
                 <small>
                     <FontAwesomeIcon icon={faLocationDot} size="xs" />
                     {token.position}
                 </small>
+            </div>
+            <div className={classNames.join(' ')}>
+                <div>
+                    <big>{token.value}</big>
+                </div>
+                <div>
+                    <small>{token.type}</small>
+                </div>
             </div>
         </div>
     );
@@ -42,7 +35,7 @@ export function TokensViewer({ tokens }: { tokens: Token[] }) {
     return tokens.length === 0 ? (
         <></>
     ) : (
-        <div className="flex flex-row gap-3 overflow-auto">
+        <div className="tokens">
             {tokens.map((token) => (
                 <TokenItem key={token.id} token={token} />
             ))}
