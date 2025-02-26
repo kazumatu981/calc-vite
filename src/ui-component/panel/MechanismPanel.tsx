@@ -16,13 +16,13 @@ export function MechanismPanel(): JSX.Element {
         <>
             <Stepper orientation="vertical">
                 <StepperPanel header="字句解析">
-                    <TokenizeDetail tokens={analyzedContext?.analyzed?.tokens || []} />
+                    <TokenizeDetail result={analyzedContext?.analyzed} />
                 </StepperPanel>
                 <StepperPanel header="構文解析">
-                    <ParseDetail parsedNode={analyzedContext?.analyzed?.nodes} />
+                    <ParseDetail result={analyzedContext?.analyzed} />
                 </StepperPanel>
                 <StepperPanel header="意味解析">
-                    <ExecuteDetail steps={analyzedContext?.analyzed?.resolveEventArgs || []} />
+                    <ExecuteDetail result={analyzedContext?.analyzed} />
                 </StepperPanel>
             </Stepper>
         </>

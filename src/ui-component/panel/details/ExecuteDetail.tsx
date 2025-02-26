@@ -1,30 +1,13 @@
 import { JSX } from 'react';
-import { ResolveEventArg } from '../../../lib/resolver';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { type AnalyzedDetailProps, ProcessDetail } from './ProcessDetail';
 
-interface ProcessDetailProps {
-    figure: JSX.Element;
-    description: JSX.Element;
-}
-
-export function ProcessDetail(args: ProcessDetailProps): JSX.Element {
-    return (
-        <div className="flex flex-column gap-2">
-            <div className="flex-auto flex justify-content-center align-items-center">{args.figure}</div>
-            <div>{args.description}</div>
-        </div>
-    );
-}
-
-interface ExecuteDetailProps {
-    steps: ResolveEventArg[];
-}
-
-function ExecuteSteps(prop: ExecuteDetailProps): JSX.Element {
+function ExecuteSteps(prop: AnalyzedDetailProps): JSX.Element {
+    const steps = prop.result?.resolveEventArgs ?? [];
     return (
         <div className="flex flex-column">
-            {prop.steps.map((step, index) => (
+            {steps.map((step, index) => (
                 <div className="flex flex-row gap-2">
                     <div className="flex align-items-center justify-content-center w-2rem h-2rem bg-primary font-bold border-circle m-2">
                         {index}
@@ -54,6 +37,6 @@ const description = (
     </>
 );
 
-export function ExecuteDetail(prop: ExecuteDetailProps): JSX.Element {
-    return <ProcessDetail figure={<ExecuteSteps steps={prop.steps} />} description={description} />;
+export function ExecuteDetail(prop: AnalyzedDetailProps): JSX.Element {
+    return <ProcessDetail figure={<ExecuteSteps result={prop.result} />} description={description} />;
 }

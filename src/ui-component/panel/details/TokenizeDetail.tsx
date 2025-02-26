@@ -1,12 +1,6 @@
 import { JSX } from 'react';
-import { ProcessDetail } from './ProcessDetail';
-import { Token } from '../../../lib/tokenizer';
-
+import { type AnalyzedDetailProps, ProcessDetail } from './ProcessDetail';
 import { TokensViewer } from '../../components/TokensViewer';
-
-interface TokenizeDetailProps {
-    tokens: Token[];
-}
 
 const description = (
     <>
@@ -24,6 +18,11 @@ const description = (
     </>
 );
 
-export function TokenizeDetail(prop: TokenizeDetailProps): JSX.Element {
-    return <ProcessDetail figure={<TokensViewer tokens={prop.tokens} withBorder={true} />} description={description} />;
+export function TokenizeDetail(prop: AnalyzedDetailProps): JSX.Element {
+    return (
+        <ProcessDetail
+            figure={<TokensViewer tokens={prop.result?.tokens ?? []} withBorder={true} />}
+            description={description}
+        />
+    );
 }

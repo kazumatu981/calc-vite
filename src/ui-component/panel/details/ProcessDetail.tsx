@@ -1,5 +1,10 @@
 import { JSX } from 'react';
 import './ProcessDetail.scss';
+import { Analyzed } from '../../context/AnalyzedContext';
+
+export interface AnalyzedDetailProps {
+    result?: Analyzed;
+}
 
 interface ProcessDetailProps {
     figure: JSX.Element;
