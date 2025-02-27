@@ -1,12 +1,6 @@
 import { JSX } from 'react';
-import { ProcessDetail } from './ProcessDetail';
-import { ParserNode } from '../../../lib/parser/parser-node';
-
+import { type AnalyzedDetailProps, ProcessDetail } from './ProcessDetail';
 import { ParserNodesViewer } from '../../components/ParserNodesViewer';
-
-interface ParseDetailProps {
-    parsedNode?: ParserNode;
-}
 
 const description = (
     <>
@@ -28,6 +22,6 @@ const description = (
     </>
 );
 
-export function ParseDetail(prop: ParseDetailProps): JSX.Element {
-    return <ProcessDetail figure={<ParserNodesViewer parsedNode={prop.parsedNode} />} description={description} />;
+export function ParseDetail(prop: AnalyzedDetailProps): JSX.Element {
+    return <ProcessDetail figure={<ParserNodesViewer parsedNode={prop.result?.nodes} />} description={description} />;
 }

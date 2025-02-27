@@ -1,44 +1,32 @@
 import { JSX } from 'react';
-import { ResolveEventArg } from '../../../lib/resolver';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { type AnalyzedDetailProps, ProcessDetail } from './ProcessDetail';
+import { Location } from '../../components/Location';
+function ExecuteSteps(prop: AnalyzedDetailProps): JSX.Element {
+    const steps = prop.result?.resolveEventArgs ?? [];
 
-interface ProcessDetailProps {
-    figure: JSX.Element;
-    description: JSX.Element;
-}
-
-export function ProcessDetail(args: ProcessDetailProps): JSX.Element {
     return (
-        <div className="flex flex-column gap-2">
-            <div className="flex-auto flex justify-content-center align-items-center">{args.figure}</div>
-            <div>{args.description}</div>
-        </div>
-    );
-}
-
-interface ExecuteDetailProps {
-    steps: ResolveEventArg[];
-}
-
-function ExecuteSteps(prop: ExecuteDetailProps): JSX.Element {
-    return (
-        <div className="flex flex-column">
-            {prop.steps.map((step, index) => (
-                <div className="flex flex-row gap-2">
-                    <div className="flex align-items-center justify-content-center w-2rem h-2rem bg-primary font-bold border-circle m-2">
-                        {index}
-                    </div>
-                    <div className="flex align-items-center justify-content-center h-2rem w-3rem p-2 m-2 border-round border-1 bg-gray-300">
-                        <FontAwesomeIcon icon={faLocationDot} size="xs" />
-                        <>{step.node.tokens[0].position}</>
-                    </div>
-                    <div className="flex align-items-center justify-content-center h-2rem p-2 m-2">
-                        {step.left} {step.operator} {step.right} = {step.result}
-                    </div>
-                </div>
-            ))}
-        </div>
+        <table className="execute-steps">
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Position</th>
+                    <th>Expression</th>
+                </tr>
+            </thead>
+            <tbody>
+                {steps.map((step, index) => (
+                    <tr key={index}>
+                        <td>{index}</td>
+                        <td>
+                            <Location position={step.node.tokens[0].position} />
+                        </td>
+                        <td>
+                            {step.left} {step.operator} {step.right} = {step.result}
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     );
 }
 const description = (
@@ -54,6 +42,6 @@ const description = (
     </>
 );
 
-export function ExecuteDetail(prop: ExecuteDetailProps): JSX.Element {
-    return <ProcessDetail figure={<ExecuteSteps steps={prop.steps} />} description={description} />;
+export function ExecuteDetail(prop: AnalyzedDetailProps): JSX.Element {
+    return <ProcessDetail figure={<ExecuteSteps result={prop.result} />} description={description} />;
 }
