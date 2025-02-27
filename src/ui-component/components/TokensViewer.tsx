@@ -1,50 +1,46 @@
+import { JSX } from 'react';
 import { Token } from '../../lib/tokenizer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { Location } from './Location';
+import './TokensViewer.scss';
 
-function TokenItem({ token }: { token: Token }) {
-    const classNames = [
-        'flex',
-        'flex-column',
-        'gap-1',
-        'border-1',
-        'p-2',
-        'border-round-md',
-        'align-items-center',
-        'justify-content-center',
-        'shadow-7',
-    ];
-    if (token.isOperator) {
-        classNames.push('bg-teal-100');
+function TokenViewer({ token, withBorder }: { token: Token; withBorder?: boolean }) {
+    const classNames = ['token'];
+    let tokenType = '不明';
+
+    switch (token.type) {
+        case 'number':
+            classNames.push('token__number');
+            tokenType = '数値';
+            break;
+        case 'leftParen':
+        case 'rightParen':
+            classNames.push('token__paren');
+            tokenType = '括弧';
+            break;
+        case 'operator':
+            classNames.push('token__operator');
+            tokenType = '演算子';
+            break;
     }
-    if (token.isParen) {
-        classNames.push('bg-orange-100');
-    }
+
     return (
-        <div className={classNames.join(' ')}>
-            <div>
-                <big>{token.value}</big>
-            </div>
-            <div>
-                <small>{token.type}</small>
-            </div>
-            <div>
-                <small>
-                    <FontAwesomeIcon icon={faLocationDot} size="xs" />
-                    {token.position}
-                </small>
+        <div className={withBorder ? 'token-item__with-border' : 'token-item'}>
+            <Location position={token.position} />
+            <div className={classNames.join(' ')}>
+                <div className="token__value">{token.value}</div>
+                <div className="token__type">{tokenType}</div>
             </div>
         </div>
     );
 }
 
-export function TokensViewer({ tokens }: { tokens: Token[] }) {
+export function TokensViewer({ tokens, withBorder }: { tokens: Token[]; withBorder?: boolean }): JSX.Element {
     return tokens.length === 0 ? (
         <></>
     ) : (
-        <div className="flex flex-row gap-3 overflow-auto">
+        <div className="tokens">
             {tokens.map((token) => (
-                <TokenItem key={token.id} token={token} />
+                <TokenViewer key={token.id} token={token} withBorder={withBorder} />
             ))}
         </div>
     );

@@ -1,0 +1,45 @@
+div.token {
+    padding: 0.5rem 1rem;
+    margin: 0em 0.5em;
+
+    align-items: center;
+
+    border-radius: var(--border-radius);
+
+    display: flex;
+    flex-direction: column;
+    .token__value {
+        font-size: 1.5rem;
+    }
+    .token__type {
+        font-size: 0.5rem;
+    }
+}
+div.token__number {
+    color: var(--highlight-text-color);
+    background-color: var(--highlight-bg);
+}
+div.token__operator {
+    color: var(--primary-color-text);
+    background-color: var(--primary-color);
+}
+div.token__paren {
+    color: var(--text-color);
+    background-color: var(--yellow-200);
+}
+
+div.tokens {
+    display: flex;
+    flex-direction: row;
+    gap: 3;
+    overflow: auto;
+    div.token-item__with-border {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px dashed var(--text-color-secondary);
+    }
+    div.token-item {
+        display: flex;
+        flex-direction: column;
+    }
+}
