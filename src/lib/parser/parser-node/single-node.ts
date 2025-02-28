@@ -41,7 +41,7 @@ export class SingleNode extends ParserNode {
      *  単項の値を文字列に変換して返す
      *  負の符号である場合、`-` を付与する
      */
-    public toString(): string {
+    public toString(_?: boolean): string {
         if (this.isNegative) {
             return `-${this.value}`;
         } else {

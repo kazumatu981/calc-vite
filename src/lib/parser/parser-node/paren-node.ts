@@ -19,7 +19,7 @@ export class ParenNode extends ParserNode {
      * ノードの文字列表現を取得する
      * @returns ノードの文字列表現
      */
-    public toString(): string {
-        return `(${this.childRoot.toString()})`;
+    public toString(includeChildren?: boolean): string {
+        return includeChildren ? `(${this.childRoot.toString()})` : '()';
     }
 }

@@ -48,7 +48,7 @@ export class BinaryNode extends ParserNode {
      * @description
      *  左の項、演算子、右の項を連結した文字列を取得する
      */
-    public toString(): string {
-        return `${this.left.toString()} ${this.operator} ${this.right.toString()}`;
+    public toString(includeChildren?: boolean): string {
+        return includeChildren ? `${this.left.toString()} ${this.operator} ${this.right.toString()}` : this.operator;
     }
 }

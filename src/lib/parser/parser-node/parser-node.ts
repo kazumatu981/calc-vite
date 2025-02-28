@@ -53,5 +53,5 @@ export abstract class ParserNode {
             return node1.connectToTail(operatorToken, node2);
         }
     }
-    abstract toString(): string;
+    abstract toString(includeChildren?: boolean): string;
 }
