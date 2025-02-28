@@ -3,6 +3,7 @@ import { OrganizationChart, OrganizationChartNodeData } from 'primereact/organiz
 
 import './ParserNodesViewer.scss';
 import { BinaryNode, ParenNode, type ParserNode, SingleNode } from '../../lib/parser/parser-node';
+import { ResolveEventArg } from '../../lib/resolver';
 import { TokensViewer } from './TokensViewer';
 
 interface ParsedChardNodeData extends OrganizationChartNodeData {
@@ -10,8 +11,16 @@ interface ParsedChardNodeData extends OrganizationChartNodeData {
     key: string;
     data: ParserNode;
 }
+interface ParserNodesViewerProps {
+    parsedNode?: ParserNode;
+    resolveEventArgs?: ResolveEventArg[];
+}
 
-function parserNodeToTreeNode(parserNode: ParserNode): ParsedChardNodeData {
+function parserNodeToTreeNode(prop: ParserNodesViewerProps): ParsedChardNodeData {
+    const parserNode = prop.parsedNode;
+    if (!parserNode) {
+        throw new Error('parserNode is not found');
+    }
     if (parserNode.nodeType === 'paren') {
         const node = parserNode as ParenNode;
         return {
@@ -19,7 +28,7 @@ function parserNodeToTreeNode(parserNode: ParserNode): ParsedChardNodeData {
             key: node.tokens[0].id,
             label: '()',
             data: node,
-            children: [parserNodeToTreeNode(node.childRoot)],
+            children: [parserNodeToTreeNode({ parsedNode: node.childRoot, resolveEventArgs: prop.resolveEventArgs })],
             expanded: true,
         };
     } else if (parserNode.nodeType === 'binary') {
@@ -29,7 +38,10 @@ function parserNodeToTreeNode(parserNode: ParserNode): ParsedChardNodeData {
             key: node.tokens[0].id,
             label: node.operator,
             data: node,
-            children: [parserNodeToTreeNode(node.left), parserNodeToTreeNode(node.right)],
+            children: [
+                parserNodeToTreeNode({ parsedNode: node.left, resolveEventArgs: prop.resolveEventArgs }),
+                parserNodeToTreeNode({ parsedNode: node.right, resolveEventArgs: prop.resolveEventArgs }),
+            ],
             expanded: true,
         };
     } else if (parserNode.nodeType === 'single') {
@@ -55,9 +67,9 @@ function nodeTemplate(node: OrganizationChartNodeData): JSX.Element {
     );
 }
 
-export function ParserNodesViewer({ parsedNode }: { parsedNode: ParserNode | undefined }) {
-    return parsedNode ? (
-        <OrganizationChart value={[parserNodeToTreeNode(parsedNode)]} nodeTemplate={nodeTemplate} />
+export function ParserNodesViewer(prop: ParserNodesViewerProps): JSX.Element {
+    return prop.parsedNode ? (
+        <OrganizationChart value={[parserNodeToTreeNode(prop)]} nodeTemplate={nodeTemplate} />
     ) : (
         <></>
     );
