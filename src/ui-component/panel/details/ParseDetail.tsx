@@ -23,5 +23,12 @@ const description = (
 );
 
 export function ParseDetail(prop: AnalyzedDetailProps): JSX.Element {
-    return <ProcessDetail figure={<ParserNodesViewer parsedNode={prop.result?.nodes} />} description={description} />;
+    return (
+        <ProcessDetail
+            figure={
+                <ParserNodesViewer parsedNode={prop.result?.nodes} resolveEventArgs={prop.result?.resolveEventArgs} />
+            }
+            description={description}
+        />
+    );
 }

@@ -3,7 +3,7 @@ import { BinaryNode } from './binary-node';
 import { Token } from '../../tokenizer/token';
 
 export type NodeType = 'single' | 'binary' | 'paren';
-
+export type StringifyType = 'thisNode' | 'executing' | 'resolved';
 /**
  * ノード
  */
@@ -53,5 +53,5 @@ export abstract class ParserNode {
             return node1.connectToTail(operatorToken, node2);
         }
     }
-    abstract toString(): string;
+    abstract toString(stringifyType?: StringifyType): string;
 }

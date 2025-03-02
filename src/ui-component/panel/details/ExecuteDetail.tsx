@@ -1,34 +1,7 @@
 import { JSX } from 'react';
 import { type AnalyzedDetailProps, ProcessDetail } from './ProcessDetail';
-import { Location } from '../../components/Location';
-function ExecuteSteps(prop: AnalyzedDetailProps): JSX.Element {
-    const steps = prop.result?.resolveEventArgs ?? [];
+import { ParserNodesViewer } from '../../components/ParserNodesViewer';
 
-    return (
-        <table className="execute-steps">
-            <thead>
-                <tr>
-                    <th>Step</th>
-                    <th>Position</th>
-                    <th>Expression</th>
-                </tr>
-            </thead>
-            <tbody>
-                {steps.map((step, index) => (
-                    <tr key={index}>
-                        <td>{index}</td>
-                        <td>
-                            <Location position={step.node.tokens[0].position} />
-                        </td>
-                        <td>
-                            {step.left} {step.operator} {step.right} = {step.result}
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-}
 const description = (
     <>
         <h2>意味解析</h2>
@@ -43,5 +16,17 @@ const description = (
 );
 
 export function ExecuteDetail(prop: AnalyzedDetailProps): JSX.Element {
-    return <ProcessDetail figure={<ExecuteSteps result={prop.result} />} description={description} />;
+    return (
+        <ProcessDetail
+            figure={
+                <ParserNodesViewer
+                    parsedNode={prop.result?.nodes}
+                    resolveEventArgs={prop.result?.resolveEventArgs}
+                    showExecutingOrder={true}
+                    withLocation={true}
+                />
+            }
+            description={description}
+        />
+    );
 }
