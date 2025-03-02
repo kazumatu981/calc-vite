@@ -1,4 +1,4 @@
-import { ParserNode } from './parser-node';
+import { ParserNode, type StringifyType } from './parser-node';
 import { Token } from '../../tokenizer';
 
 /**
@@ -19,7 +19,15 @@ export class ParenNode extends ParserNode {
      * ノードの文字列表現を取得する
      * @returns ノードの文字列表現
      */
-    public toString(includeChildren?: boolean): string {
-        return includeChildren ? `(${this.childRoot.toString()})` : '()';
+    public toString(stringifyType?: StringifyType): string {
+        stringifyType = stringifyType ?? 'thisNode';
+        switch (stringifyType) {
+            case 'thisNode':
+                return '()';
+            case 'executing':
+                return `(${this.childRoot.toString('executing')})`;
+            case 'resolved':
+                return `${this.childRoot.toString('resolved')}`;
+        }
     }
 }
